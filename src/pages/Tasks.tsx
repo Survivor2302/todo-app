@@ -1,6 +1,4 @@
-import { z } from "zod";
 import {
-  IonButton,
   IonContent,
   IonHeader,
   IonPage,
@@ -11,11 +9,7 @@ import {
 import { columns } from "@/components/data-table/columns";
 import { DataTable } from "@/components/data-table/data-table";
 import { useState, useEffect } from "react";
-import { useStorage } from "@/hooks/useStorage";
 import { Task } from "@/lib/model/task.class";
-import { Storage } from "@ionic/storage";
-import { AddTaskDialog } from "@/components/modal/AddTaskDialog";
-import { DeleteAllTasksDialog } from "@/components/modal/DeleteTasksDialog";
 
 const Tasks: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);

@@ -21,7 +21,7 @@ export function DeleteAllTasksDialog({ table }: DeleteAllTasksDialogProps) {
   const selectedRows = table
     .getFilteredSelectedRowModel()
     .rows.map((row) => row.original as Task);
-
+  
   const handleDeleteTasks = async () => {
     if (selectedRows && selectedRows.length > 0) {
       for (const task of selectedRows) {

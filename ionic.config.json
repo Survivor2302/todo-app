@@ -1,5 +1,5 @@
 {
-  "name": "ionic-react-shadcn",
+  "name": "todo-app",
   "integrations": {
     "capacitor": {}
   },

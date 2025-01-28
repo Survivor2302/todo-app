@@ -18,13 +18,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
+import { labels, priorities, statuses } from "@/lib/data";
 
 interface AddTaskDialogProps {}
-
-// Extract unique values from tasks.json
-const STATUS_OPTIONS = ["todo", "in progress", "backlog", "canceled", "done"];
-const LABEL_OPTIONS = ["bug", "feature", "documentation"];
-const PRIORITY_OPTIONS = ["low", "medium", "high"];
 
 export function AddTaskDialog({}: AddTaskDialogProps) {
   const [open, setOpen] = useState(false);
@@ -70,9 +66,9 @@ export function AddTaskDialog({}: AddTaskDialogProps) {
               <SelectValue placeholder="Status" />
             </SelectTrigger>
             <SelectContent>
-              {STATUS_OPTIONS.map((status) => (
-                <SelectItem key={status} value={status}>
-                  {status.charAt(0).toUpperCase() + status.slice(1)}
+              {statuses.map((status) => (
+                <SelectItem key={status.value} value={status.value}>
+                  {status.label}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -87,9 +83,9 @@ export function AddTaskDialog({}: AddTaskDialogProps) {
               <SelectValue placeholder="Priority" />
             </SelectTrigger>
             <SelectContent>
-              {PRIORITY_OPTIONS.map((priority) => (
-                <SelectItem key={priority} value={priority}>
-                  {priority.charAt(0).toUpperCase() + priority.slice(1)}
+              {priorities.map((priority) => (
+                <SelectItem key={priority.value} value={priority.value}>
+                  {priority.label}
                 </SelectItem>
               ))}
             </SelectContent>
@@ -102,9 +98,9 @@ export function AddTaskDialog({}: AddTaskDialogProps) {
               <SelectValue placeholder="Label" />
             </SelectTrigger>
             <SelectContent>
-              {LABEL_OPTIONS.map((label) => (
-                <SelectItem key={label} value={label}>
-                  {label.charAt(0).toUpperCase() + label.slice(1)}
+              {labels.map((label) => (
+                <SelectItem key={label.value} value={label.value}>
+                  {label.label}
                 </SelectItem>
               ))}
             </SelectContent>

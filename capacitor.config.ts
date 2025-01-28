@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'ionic-react-shadcn',
+  appName: 'todo-app',
   webDir: 'dist',
   server: {
     androidScheme: 'https'
