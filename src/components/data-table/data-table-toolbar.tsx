@@ -1,7 +1,7 @@
 "use client";
 
 import { Table } from "@tanstack/react-table";
-import { X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +9,9 @@ import { DataTableViewOptions } from "@/components/data-table/data-table-view-op
 
 import { priorities, statuses } from "../../lib/data";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
+import { AddTaskDialog } from "../modal/AddTaskDialog";
+import { DeleteAllTasksDialog } from "../modal/DeleteTasksDialog";
+import { Task } from "@/lib/model/task.class";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -56,6 +59,10 @@ export function DataTableToolbar<TData>({
         )}
       </div>
       <DataTableViewOptions table={table} />
+      <div className="flex justify-end space-x-2">
+        <AddTaskDialog />
+        <DeleteAllTasksDialog table={table} />
+      </div>
     </div>
   );
 }

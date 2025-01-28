@@ -1,5 +1,6 @@
 import { z } from "zod";
 import {
+  IonButton,
   IonContent,
   IonHeader,
   IonPage,
@@ -9,11 +10,30 @@ import {
 
 import { columns } from "@/components/data-table/columns";
 import { DataTable } from "@/components/data-table/data-table";
-import { taskSchema } from "@/lib/schema";
-import tasksData from "./tasks.json";
+import { useState, useEffect } from "react";
+import { useStorage } from "@/hooks/useStorage";
+import { Task } from "@/lib/model/task.class";
+import { Storage } from "@ionic/storage";
+import { AddTaskDialog } from "@/components/modal/AddTaskDialog";
+import { DeleteAllTasksDialog } from "@/components/modal/DeleteTasksDialog";
 
 const Tasks: React.FC = () => {
-  const tasks = z.array(taskSchema).parse(tasksData);
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  useEffect(() => {
+    const loadTasks = async () => {
+      const allTasks = await Task.getAll();
+      setTasks(allTasks);
+    };
+    loadTasks();
+
+    // S'abonner aux changements
+    const subscribtion = Task.subscribe((updatedTasks) => {
+      setTasks(updatedTasks);
+    });
+
+    return () => subscribtion();
+  }, []);
 
   return (
     <IonPage>
@@ -23,7 +43,7 @@ const Tasks: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen={false}>
-        <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex h-full">
+        <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
           <DataTable data={tasks} columns={columns} />
         </div>
       </IonContent>

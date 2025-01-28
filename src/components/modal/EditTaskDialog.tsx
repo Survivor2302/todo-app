@@ -1,0 +1,116 @@
+import { Task } from "@/lib/model/task.class";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useState } from "react";
+
+// Réutiliser les mêmes options que AddTaskDialog
+const STATUS_OPTIONS = ["todo", "in progress", "backlog", "canceled", "done"];
+const LABEL_OPTIONS = ["bug", "feature", "documentation"];
+const PRIORITY_OPTIONS = ["low", "medium", "high"];
+
+interface EditTaskDialogProps {
+  task: Task;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onSave: (updatedTask: Task) => Promise<void>;
+}
+
+export function EditTaskDialog({
+  task,
+  open,
+  onOpenChange,
+  onSave,
+}: EditTaskDialogProps) {
+  const [editedTask, setEditedTask] = useState({ ...task });
+
+  const handleSave = async () => {
+    await onSave(editedTask);
+    onOpenChange(false);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[425px] text-black">
+        <DialogHeader>
+          <DialogTitle>Edit Task</DialogTitle>
+        </DialogHeader>
+        <DialogDescription>Make changes to your task.</DialogDescription>
+        <div className="grid gap-4 py-4">
+          <Input
+            placeholder="Task title"
+            value={editedTask.title}
+            onChange={(e) =>
+              setEditedTask({ ...editedTask, title: e.target.value })
+            }
+          />
+          <Select
+            value={editedTask.status}
+            onValueChange={(value) =>
+              setEditedTask({ ...editedTask, status: value })
+            }
+          >
+            <SelectTrigger className="w-full bg-white">
+              <SelectValue placeholder="Status" />
+            </SelectTrigger>
+            <SelectContent>
+              {STATUS_OPTIONS.map((status) => (
+                <SelectItem key={status} value={status}>
+                  {status.charAt(0).toUpperCase() + status.slice(1)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select
+            value={editedTask.priority}
+            onValueChange={(value) =>
+              setEditedTask({ ...editedTask, priority: value })
+            }
+          >
+            <SelectTrigger className="w-full bg-white">
+              <SelectValue placeholder="Priority" />
+            </SelectTrigger>
+            <SelectContent>
+              {PRIORITY_OPTIONS.map((priority) => (
+                <SelectItem key={priority} value={priority}>
+                  {priority.charAt(0).toUpperCase() + priority.slice(1)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select
+            value={editedTask.label}
+            onValueChange={(value) =>
+              setEditedTask({ ...editedTask, label: value })
+            }
+          >
+            <SelectTrigger className="w-full bg-white">
+              <SelectValue placeholder="Label" />
+            </SelectTrigger>
+            <SelectContent>
+              {LABEL_OPTIONS.map((label) => (
+                <SelectItem key={label} value={label}>
+                  {label.charAt(0).toUpperCase() + label.slice(1)}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Button onClick={handleSave}>Save Changes</Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
