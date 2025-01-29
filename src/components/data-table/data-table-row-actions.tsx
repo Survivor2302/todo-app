@@ -23,6 +23,7 @@ import { labels } from "../../lib/data";
 import { taskSchema } from "../../lib/schema";
 import { Task } from "@/lib/model/task.class";
 import { EditTaskDialog } from "@/components/modal/EditTaskDialog";
+import { useTaskService } from "@/lib/context/TaskServiceContext";
 
 interface DataTableRowActionsProps<TData> {
   row: Row<TData>;
@@ -31,11 +32,12 @@ interface DataTableRowActionsProps<TData> {
 export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
+  const taskService = useTaskService();
   const task = taskSchema.parse(row.original);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
 
   const handleDelete = async () => {
-    await Task.delete(task.id);
+    await taskService.delete(task.id);
   };
 
   const handleLabelChange = async (newLabel: string) => {
@@ -43,7 +45,7 @@ export function DataTableRowActions<TData>({
       ...task,
       label: newLabel,
     });
-    await Task.update(updatedTask);
+    await taskService.update(updatedTask);
   };
 
   const handleCopy = async () => {
@@ -52,11 +54,11 @@ export function DataTableRowActions<TData>({
       id: undefined, // L'ID sera généré automatiquement
       title: `${task.title} (Copy)`,
     });
-    await Task.create(newTask);
+    await taskService.create(newTask);
   };
 
   const handleEdit = async (updatedTask: Task) => {
-    await Task.update(updatedTask);
+    await taskService.update(updatedTask);
   };
 
   return (

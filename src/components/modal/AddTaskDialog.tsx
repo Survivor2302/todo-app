@@ -19,11 +19,14 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 import { labels, priorities, statuses } from "@/lib/data";
+import { TaskService } from "@/lib/services/task.service";
+import { useTaskService } from "@/lib/context/TaskServiceContext";
 
 interface AddTaskDialogProps {}
 
 export function AddTaskDialog({}: AddTaskDialogProps) {
   const [open, setOpen] = useState(false);
+  const taskService = useTaskService();
   const [newTask, setNewTask] = useState({
     title: "",
     status: "todo",
@@ -32,7 +35,7 @@ export function AddTaskDialog({}: AddTaskDialogProps) {
   });
 
   const handleAddTask = async () => {
-    await Task.create(newTask);
+    await taskService.create(newTask);
     setOpen(false);
     setNewTask({
       title: "",

@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { Task } from "@/lib/model/task.class";
 import { Table } from "@tanstack/react-table";
+import { TaskService } from "@/lib/services/task.service";
+import { useTaskService } from "@/lib/context/TaskServiceContext";
 
 interface DeleteAllTasksDialogProps {
   selectedRows?: Task[];
@@ -18,17 +20,18 @@ interface DeleteAllTasksDialogProps {
 
 export function DeleteAllTasksDialog({ table }: DeleteAllTasksDialogProps) {
   const [open, setOpen] = useState(false);
+  const taskService = useTaskService();
   const selectedRows = table
     .getFilteredSelectedRowModel()
     .rows.map((row) => row.original as Task);
-  
+
   const handleDeleteTasks = async () => {
     if (selectedRows && selectedRows.length > 0) {
       for (const task of selectedRows) {
-        await Task.delete(task.id);
+        await taskService.delete(task.id);
       }
     } else {
-      await Task.deleteAll();
+      await taskService.deleteAll();
     }
     table.resetRowSelection();
     setOpen(false);

@@ -17,6 +17,9 @@ import {
 } from "@/components/ui/select";
 import { useState } from "react";
 import { labels, priorities, statuses } from "@/lib/data";
+import { TaskService } from "@/lib/services/task.service";
+import { Storage } from "@ionic/storage";
+import { useTaskService } from "@/lib/context/TaskServiceContext";
 
 interface EditTaskDialogProps {
   task: Task;
@@ -32,9 +35,9 @@ export function EditTaskDialog({
   onSave,
 }: EditTaskDialogProps) {
   const [editedTask, setEditedTask] = useState({ ...task });
-
+  const taskService = useTaskService();
   const handleSave = async () => {
-    await onSave(editedTask);
+    await taskService.update(editedTask);
     onOpenChange(false);
   };
 
