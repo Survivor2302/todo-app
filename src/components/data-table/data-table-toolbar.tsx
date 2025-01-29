@@ -23,45 +23,49 @@ export function DataTableToolbar<TData>({
   const isFiltered = table.getState().columnFilters.length > 0;
 
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex flex-1 items-center space-x-2">
-        <Input
-          placeholder="Filter tasks..."
-          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("title")?.setFilterValue(event.target.value)
-          }
-          className="h-8 w-[150px] lg:w-[250px]"
-        />
-        {table.getColumn("status") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("status")}
-            title="Status"
-            options={statuses}
-          />
-        )}
-        {table.getColumn("priority") && (
-          <DataTableFacetedFilter
-            column={table.getColumn("priority")}
-            title="Priority"
-            options={priorities}
-          />
-        )}
-        {isFiltered && (
-          <Button
-            variant="ghost"
-            onClick={() => table.resetColumnFilters()}
-            className="h-8 px-2 lg:px-3"
-          >
-            Reset
-            <X />
-          </Button>
-        )}
-      </div>
-      <DataTableViewOptions table={table} />
-      <div className="flex justify-end space-x-2">
+    <div>
+      <div className="flex justify-between space-x-2 mb-4">
         <AddTaskDialog />
         <DeleteAllTasksDialog table={table} />
+      </div>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col sm:flex-row sm:flex-1 gap-2 sm:items-center">
+          <Input
+            placeholder="Filter tasks..."
+            value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+            onChange={(event) =>
+              table.getColumn("title")?.setFilterValue(event.target.value)
+            }
+            className="h-8 w-full sm:w-[150px] lg:w-[250px]"
+          />
+          <div className="flex flex-wrap gap-2 w-full">
+            {table.getColumn("status") && (
+              <DataTableFacetedFilter
+                column={table.getColumn("status")}
+                title="Status"
+                options={statuses}
+              />
+            )}
+            {table.getColumn("priority") && (
+              <DataTableFacetedFilter
+                column={table.getColumn("priority")}
+                title="Priority"
+                options={priorities}
+              />
+            )}
+            {isFiltered && (
+              <Button
+                variant="ghost"
+                onClick={() => table.resetColumnFilters()}
+                className="h-8 px-2 lg:px-3"
+              >
+                Reset
+                <X className="ml-2" />
+              </Button>
+            )}
+            <DataTableViewOptions table={table} />
+          </div>
+        </div>
       </div>
     </div>
   );

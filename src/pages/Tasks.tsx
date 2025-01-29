@@ -41,7 +41,7 @@ const Tasks: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen={false}>
-        <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
+        <div className=" h-full flex-1 flex-col space-y-8 p-8 md:flex">
           <DataTable data={tasks} columns={columns} />
         </div>
       </IonContent>
