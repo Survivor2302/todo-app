@@ -42,6 +42,7 @@ const Tasks: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen={false}>
         <div className=" h-full flex-1 flex-col space-y-8 p-8 md:flex">
+
           <DataTable data={tasks} columns={columns} />
         </div>
       </IonContent>

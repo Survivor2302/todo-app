@@ -26,6 +26,7 @@ interface AddTaskDialogProps {}
 
 export function AddTaskDialog({}: AddTaskDialogProps) {
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState("");
   const taskService = useTaskService();
   const [newTask, setNewTask] = useState({
     title: "",
@@ -35,6 +36,11 @@ export function AddTaskDialog({}: AddTaskDialogProps) {
   });
 
   const handleAddTask = async () => {
+    if (!newTask.title.trim()) {
+      setError("Le titre de la tâche est obligatoire");
+      return;
+    }
+    setError("");
     await taskService.create(newTask);
     setOpen(false);
     setNewTask({
@@ -56,11 +62,17 @@ export function AddTaskDialog({}: AddTaskDialogProps) {
         </DialogHeader>
         <DialogDescription>Create a new task to get started.</DialogDescription>
         <div className="grid gap-4 py-4">
-          <Input
-            placeholder="Task title"
-            value={newTask.title}
-            onChange={(e) => setNewTask({ ...newTask, title: e.target.value })}
-          />
+          <div>
+            <Input
+              placeholder="Task title"
+              value={newTask.title}
+              onChange={(e) => {
+                setNewTask({ ...newTask, title: e.target.value });
+                setError("");
+              }}
+            />
+            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+          </div>
           <Select
             value={newTask.status}
             onValueChange={(value) => setNewTask({ ...newTask, status: value })}

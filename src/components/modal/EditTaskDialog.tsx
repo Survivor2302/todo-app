@@ -35,8 +35,15 @@ export function EditTaskDialog({
   onSave,
 }: EditTaskDialogProps) {
   const [editedTask, setEditedTask] = useState({ ...task });
+  const [error, setError] = useState("");
   const taskService = useTaskService();
+
   const handleSave = async () => {
+    if (!editedTask.title.trim()) {
+      setError("Le titre de la tâche est obligatoire");
+      return;
+    }
+    setError("");
     await taskService.update(editedTask);
     onOpenChange(false);
   };
@@ -49,13 +56,17 @@ export function EditTaskDialog({
         </DialogHeader>
         <DialogDescription>Make changes to your task.</DialogDescription>
         <div className="grid gap-4 py-4">
-          <Input
-            placeholder="Task title"
-            value={editedTask.title}
-            onChange={(e) =>
-              setEditedTask({ ...editedTask, title: e.target.value })
-            }
-          />
+          <div>
+            <Input
+              placeholder="Task title"
+              value={editedTask.title}
+              onChange={(e) => {
+                setEditedTask({ ...editedTask, title: e.target.value });
+                setError("");
+              }}
+            />
+            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+          </div>
           <Select
             value={editedTask.status}
             onValueChange={(value) =>
