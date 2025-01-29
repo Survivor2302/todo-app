@@ -4,6 +4,7 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
+  IonButton,
 } from "@ionic/react";
 
 import { columns } from "@/components/data-table/columns";
@@ -13,6 +14,7 @@ import { TaskService } from "@/lib/services/task.service";
 import { Task } from "@/lib/model/task.class";
 import { Storage } from "@ionic/storage";
 import { useTaskService } from "@/lib/context/TaskServiceContext";
+import { LocalNotifications } from "@capacitor/local-notifications";
 
 const Tasks: React.FC = () => {
   const taskService = useTaskService();
@@ -42,7 +44,6 @@ const Tasks: React.FC = () => {
       </IonHeader>
       <IonContent fullscreen={false}>
         <div className=" h-full flex-1 flex-col space-y-8 p-8 md:flex">
-
           <DataTable data={tasks} columns={columns} />
         </div>
       </IonContent>
