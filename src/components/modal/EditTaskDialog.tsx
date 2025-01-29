@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useState } from "react";
-import { labels, priorities, statuses } from "@/lib/data";
+import { labels, priorities, statuses } from "@/lib/types";
 import { TaskService } from "@/lib/services/task.service";
 import { Storage } from "@ionic/storage";
 import { useTaskService } from "@/lib/context/TaskServiceContext";

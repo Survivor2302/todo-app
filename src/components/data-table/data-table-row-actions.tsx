@@ -19,8 +19,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { labels } from "../../lib/data";
-import { taskSchema } from "../../lib/schema";
+import { labels } from "@/lib/types";
 import { Task } from "@/lib/model/task.class";
 import { EditTaskDialog } from "@/components/modal/EditTaskDialog";
 import { useTaskService } from "@/lib/context/TaskServiceContext";
@@ -33,7 +32,7 @@ export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const taskService = useTaskService();
-  const task = taskSchema.parse(row.original);
+  const task = row.original as Task;
   const [editDialogOpen, setEditDialogOpen] = useState(false);
 
   const handleDelete = async () => {

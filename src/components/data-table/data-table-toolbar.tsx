@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DataTableViewOptions } from "@/components/data-table/data-table-view-options";
 
-import { priorities, statuses } from "../../lib/data";
+import { priorities, statuses } from "@/lib/types";
 import { DataTableFacetedFilter } from "./data-table-faceted-filter";
 import { AddTaskDialog } from "../modal/AddTaskDialog";
 import { DeleteAllTasksDialog } from "../modal/DeleteTasksDialog";
